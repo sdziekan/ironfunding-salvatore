@@ -112,9 +112,11 @@ app.use(passport.session());
 
 var index = require('./routes/index');
 var authentication = require('./routes/authentication');
+var campaign = require('./routes/campaigns')
 
 app.use('/', index);
 app.use('/',authentication);
+app.use('/', campaign);
 
 app.use( (req, res, next) => {
   if (typeof(req.user) !== "undefined"){
