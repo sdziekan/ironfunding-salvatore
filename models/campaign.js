@@ -39,4 +39,18 @@ const campaignSchema = new Schema({
   }
 });
 
+campaignSchema.virtual("timeRemaining").get(function() {
+  let remaining = moment(this.deadline).fromNow(true).split(" ");
+  let [days, unit] = remaining;
+  return { days, unit };
+});
+
+campaignSchema.virtual("inputFormattedDate").get(function() {
+  return moment(this.deadline).format("YYYY-MM-DD");
+});
+
+campaignSchema.methods.belongsTo = function(user) {
+  return this._creator.equals(user._id);
+};
+
 module.exports = mongoose.model("Campaign", campaignSchema);
